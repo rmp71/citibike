@@ -14,10 +14,10 @@ target-path: "target"
 clean-targets: ["target", "dbt_packages"]
 
 models:
-    raw:
-      +materialized: table
-      +schema: raw # models/staging → schema = raw
+  raw:
+    +materialized: table
+    +schema: raw # models/staging → schema = raw
 
-    refined:
-      +materialized: table
-      +schema: refined # models/marts → schema = refined
+  refined:
+    +materialized: table
+    +schema: refined # models/marts → schema = refined
