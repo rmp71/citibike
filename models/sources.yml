@@ -6,3 +6,4 @@ sources:
     schema: landing
     tables:
       - name: citibike_trips
+      - name: weather
