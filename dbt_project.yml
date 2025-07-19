@@ -1,4 +1,4 @@
-name: case_study
+name: citibike
 version: "1.0"
 config-version: 2
 
@@ -14,7 +14,7 @@ target-path: "target"
 clean-targets: ["target", "dbt_packages"]
 
 models:
-  case_study:
+  citibike:
     raw:
       +materialized: table
       +schema: raw # models/staging → schema = raw
