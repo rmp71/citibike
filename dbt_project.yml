@@ -14,7 +14,6 @@ target-path: "target"
 clean-targets: ["target", "dbt_packages"]
 
 models:
-  citibike:
     raw:
       +materialized: table
       +schema: raw # models/staging → schema = raw
