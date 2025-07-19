@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: landing
+    database: citibike_db
+    schema: landing
+    tables:
+      - name: citibike_trips
