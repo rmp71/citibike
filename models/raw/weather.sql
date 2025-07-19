@@ -20,27 +20,28 @@ with
             raw:weather as weather_array,
             raw:city:langs as langs_array
         from {{ source("landing", "weather") }}
+        -- where raw:time::int > unix_timestamp('2024-01-01')
     ),
     flattened_weather as (
-        select
+        select distinct
             base.*,
             weather.value:id::int as weather_id,
             weather.value:main::string as weather_main,
             weather.value:description::string as weather_description,
             weather.value:icon::string as weather_icon
         from base, lateral flatten(input => base.weather_array) as weather
-    ),
-
-    flattened_langs as (
-        select
-            base.city_id,
-            lang.value::string as lang_value,
-            object_keys(lang.value)[0] as lang_key,
-            lang.value:abbr::string as abbr
-        from base, lateral flatten(input => base.langs_array) as lang
     )
 
-select
+    -- flattened_langs as (
+    --     select
+    --         base.city_id,
+    --         lang.value::string as lang_value,
+    --         object_keys(lang.value)[0] as lang_key,
+    --         lang.value:abbr::string as abbr
+    --     from base, lateral flatten(input => base.langs_array) as lang
+    -- )
+
+select 
     f.city_name,
     f.findname,
     f.city_id,
@@ -60,9 +61,9 @@ select
     f.weather_id,
     f.weather_main,
     f.weather_description,
-    f.weather_icon,
-    l.lang_key,
-    l.lang_value,
-    l.abbr
+    f.weather_icon
+    -- l.lang_key,
+    -- l.lang_value,
+    -- l.abbr
 from flattened_weather f
-left join flattened_langs l on f.city_id = l.city_id
+-- left join flattened_langs l on f.city_id = l.city_id
