@@ -1,0 +1,104 @@
+models:
+  - name: fact_bike_trips
+    description: Daily trip level data
+    columns:
+      - name: fact_bike_trip_key
+        description: The field that shows table grain (all fields in this table)
+        tests:
+          - not_null
+          - unique
+      - name: dim_weather_key
+        description: Foreign key to join with the dim_weather table
+      - name: dim_start_station_key
+        description: Foreign key to join with the dim_station table
+      - name: dim_end_station_key
+        description: Foreign key to join with the dim_station table
+      - name: dim_user_key
+        description: Foreign key to join with the dim_user table
+      - name: bike_id
+        description: ID associated with bike
+      - name: promotion_details
+        description: promotion (discount offer) customer used for the trip
+      - name: trip_date
+        description: Date on which customer took the trip
+      - name: start_time
+        description: Trip start time
+      - name: stop_time
+        description: Trip stop time
+      - name: trip_duration_seconds
+        description: Trip duration in seconds (datediff between start time and stop time)
+      - name: distance_km
+        description: Distance calculated between the trip start station and trip end station using haversine formula
+      
+  - name: dim_weather
+    description: Dimension table for weather it has hourly weather data
+    columns:
+      - name: dim_weather_key
+        description: The field that shows table grain (weather_id, observation_time, city_id)
+        tests:
+          - not_null
+          - unique
+      - name: city_id
+        description: ID associated with the city
+      - name: weather_id
+        description: ID associated with the weather
+      - name: weather_main
+        description: High level description of the weather e.g., Clear, Rain, Clouds
+      - name: weather_description
+        description: In detail description of the weather e.g., overcast clouds, light rain, heavy rain, sky is clear
+      - name: weather_icon
+        description: Weather icon
+      - name: cloud_cover
+        description: Cloud cover number. Higher the number, more clouds
+      - name: humidity
+        description: Humidity number
+      - name: pressure
+        description: Weather pressure number
+      - name: average_temperature
+        description: Average temperature
+      - name: minimum_temperature
+        description: Minimum temperature
+      - name: maximum_temperature
+        description: Maximum temperature
+      - name: observation_time
+        description: Time when weather was recorded
+      - name: wind_speed
+        description: Wind speed
+      - name: wind_degree
+        description: Wind degree
+      
+  - name: dim_station
+    description: Dimension table for station
+    columns:
+      - name: dim_station_key
+        description: The field that shows table grain (station_id, station_name, station_latitude, station_longitude, city_id)
+        tests:
+          - not_null
+          - unique
+      - name: station_id
+        description: ID associated with the station
+      - name: station_name
+        description: Station name
+      - name: station_latitude
+        description: Station latitude
+      - name: station_longitude
+        description: Station longitude
+      - name: city_id
+        description: ID associated the city
+
+  - name: dim_user
+    description: Dimension table for users
+    columns:
+      - name: dim_user_key
+        description: The field that shows table grain (user_type, birth_year, gender)
+        tests:
+          - not_null
+          - unique
+      - name: user_type
+        description: User Type (Customer = 24-hour pass or 3-day pass user; Subscriber = Annual Member)
+      - name: birth_year
+        description: Year of birth
+      - name: gender
+        description: Gender (0=unknown; 1=male; 2=female)
+ 
+ 

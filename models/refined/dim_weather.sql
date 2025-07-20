@@ -10,8 +10,8 @@ with
             humidity,
             pressure,
             temperature as average_temperature,
-            temp_min as minimum_temprature,
-            temp_max as maximum_tempratur,
+            temp_min as minimum_temperature,
+            temp_max as maximum_temperature,
             observation_time,
             wind_speed,
             wind_deg as wind_degree
@@ -32,8 +32,8 @@ select
     humidity,
     pressure,
     average_temperature,
-    minimum_temprature,
-    maximum_tempratur,
+    minimum_temperature,
+    maximum_temperature,
     observation_time,
     wind_speed,
     wind_degree
