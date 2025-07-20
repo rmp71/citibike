@@ -13,7 +13,7 @@ with
         where start_time::date >= '2017-01-01'
     ),
     weather as (select dim_weather_key, weather_main,weather_description,average_temperature,wind_speed from {{ ref("dim_weather") }}),
-    users as (select dim_user_key,user_type,birth_year,gender from {{ref("dim_user")}})
+    users as (select dim_user_key,user_type,birth_year,gender,age_bucket from {{ref("dim_user")}})
 select
     t.fact_bike_trip_key,
     t.trip_date,
@@ -28,6 +28,7 @@ select
     coalesce(u.user_type,'Unknown') as user_type,
     u.gender,
     u.birth_year,
+    u.age_bucket
 from trips t
 left join weather w on (t.dim_weather_key = w.dim_weather_key)
 left join users u on (t.dim_user_key = u.dim_user_key)

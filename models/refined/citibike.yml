@@ -100,5 +100,9 @@ models:
         description: Year of birth
       - name: gender
         description: Gender (0=unknown; 1=male; 2=female)
+      - name: age
+        description: Customer age in years
+      - name: age_bucket
+        description: Customised age bucket created for better analysis
  
  
