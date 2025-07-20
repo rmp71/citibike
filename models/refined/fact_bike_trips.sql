@@ -46,7 +46,7 @@ with
                         "promotion_details",
                         "start_time",
                         "stop_time",
-                        "trip_duration"
+                        "trip_duration",
                     ]
                 )
             }} as fact_bike_trip_key,
@@ -89,18 +89,18 @@ with
         from trips t
         left join
             {{ ref("dim_weather") }} w
-            on date_trunc('hour', t.start_time) = date_trunc('hour',w.observation_time)
-                and date_trunc('day',t.start_time)=date_trunc('day',w.observation_time)
-                and t.start_city_id=w.city_id
+            on date_trunc('hour', t.start_time) = date_trunc('hour', w.observation_time)
+            and date_trunc('day', t.start_time) = date_trunc('day', w.observation_time)
+            and t.start_city_id = w.city_id
         qualify
             row_number() over (
-                partition by fact_bike_trip_key
-                order by w.observation_time
+                partition by fact_bike_trip_key order by w.observation_time
             )
             = 1
     )
 
-select fact_bike_trip_key,
+select
+    fact_bike_trip_key,
     dim_weather_key,
     dim_start_station_key,
     dim_end_station_key,
