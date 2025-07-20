@@ -1,7 +1,7 @@
 select
     cast(trip_duration as integer) as trip_duration,
     cast(start_time as timestamp) as start_time,
-    cast(start_time as timestamp) as stop_time,
+    cast(stop_time as timestamp) as stop_time,
     cast(start_station_id as integer) as start_station_id,
     start_station_name,
     cast(start_station_latitude as float) as start_station_latitude,
