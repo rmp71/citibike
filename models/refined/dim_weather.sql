@@ -23,7 +23,7 @@ select
             ["weather_id", "observation_time", "city_id"]
         )
     }} as dim_weather_key,
-    {{ dbt_utils.generate_surrogate_key(["city_id"]) }} as dim_city_key,
+    city_id,
     weather_id,
     weather_main,
     weather_description,

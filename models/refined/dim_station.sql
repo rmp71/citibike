@@ -14,11 +14,30 @@ with
             end_station_longitude as station_longitude
         from {{ ref("citibike_trips") }}
     ),
-    city as (select distinct lat, lon, city_id from {{ ref("weather") }}),
-    city_join as (
-        select distinct s.*, c.city_id
+    cities as (select distinct lat, lon, city_id from {{ ref("weather") }}),
+    station_city_distance as (
+        select
+            s.station_id,
+            s.station_name,
+            s.station_latitude,
+            s.station_longitude,
+            c.city_id,
+            -- Haversine formula to calculate distance in km
+            {{
+                haversine(
+                    "station_latitude",
+                    "station_longitude",
+                    "lat",
+                    "lon",
+                )
+            }} as distance_km
         from stations s
-        left join city c on (s.station_latitude = c.lat and s.station_longitude = c.lon)
+        cross join cities c
+    ),
+    ranked as (
+        select *
+        from station_city_distance
+        qualify row_number() over (partition by station_id,station_name,station_latitude,station_longitude order by distance_km) = 1
     )
 select
     {{
@@ -31,5 +50,10 @@ select
                 "city_id",
             ]
         )
-    }} as dim_station_key, *
-from city_join
+    }} as dim_station_key,
+    station_id,
+    station_name,
+    station_latitude,
+    station_longitude,
+    city_id
+from ranked
