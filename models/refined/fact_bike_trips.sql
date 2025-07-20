@@ -45,12 +45,12 @@ with
 
     weather_joined as (
         select
-            t.*,
             {{
                 dbt_utils.generate_surrogate_key(
                     ["weather_id", "observation_time", "city_id"]
                 )
-            }} as dim_weather_key
+            }} as dim_weather_key,
+            t.*            
         from trips t
         left join
             {{ ref("weather") }} w
