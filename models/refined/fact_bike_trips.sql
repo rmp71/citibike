@@ -30,8 +30,7 @@ with
             promotion_details,
             start_time,
             stop_time,
-            trip_duration,
-            datediff(minute, start_time, stop_time) as duration_minutes,
+            trip_duration as trip_duration_seconds,
             {{
                 haversine(
                     "start_station_latitude",
