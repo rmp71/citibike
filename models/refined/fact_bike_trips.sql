@@ -107,6 +107,7 @@ select
     dim_user_key,
     bike_id,
     promotion_details,
+    start_time::date as trip_date,
     start_time,
     stop_time,
     trip_duration_seconds,
