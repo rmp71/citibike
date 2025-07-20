@@ -21,3 +21,6 @@ models:
     refined:
       +materialized: table
       +schema: refined # models/schema = refined
+    customised:
+      +materialized: view
+      +schema: customised

@@ -95,16 +95,20 @@ with
         qualify
             row_number() over (
                 partition by fact_bike_trip_key
-                -- user_type, birth_year, gender, 
-                -- start_station_id,
-                -- "start_station_name","start_station_latitude","start_station_longitude",
-                -- 'end_station_id',
-                -- "end_station_name","end_station_latitude","end_station_longitude",
-                -- 'bike_id', 'promotion_details', 'start_time'
                 order by w.observation_time
             )
             = 1
     )
 
-select *
+select fact_bike_trip_key,
+    dim_weather_key,
+    dim_start_station_key,
+    dim_end_station_key,
+    dim_user_key,
+    bike_id,
+    promotion_details,
+    start_time,
+    stop_time,
+    trip_duration_seconds,
+    distance_km
 from weather_joined
