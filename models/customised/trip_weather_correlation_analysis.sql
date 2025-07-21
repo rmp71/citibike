@@ -10,7 +10,7 @@ with
             trip_duration_seconds,
             distance_km
         from {{ ref("fact_bike_trips") }}
-        where start_time::date >= '2017-01-01'
+        where start_time::date >= '2016-01-01'
     ),
     weather as (select dim_weather_key, weather_main,weather_description,average_temperature,wind_speed from {{ ref("dim_weather") }}),
     users as (select dim_user_key,user_type,birth_year,gender,age_bucket from {{ref("dim_user")}})
