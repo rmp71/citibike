@@ -15,7 +15,7 @@ with
     weather as (select dim_weather_key, weather_main,weather_description,average_temperature,wind_speed from {{ ref("dim_weather") }}),
     users as (select dim_user_key,user_type,birth_year,gender,age_bucket from {{ref("dim_user")}})
 select
-    t.fact_bike_trip_key,
+    1 as trip_count,
     t.trip_date,
     t.start_time,
     t.promotion_details,
